@@ -1,0 +1,88 @@
+{% extends "base.html.twig" %}
+
+{% block title %} {{ parent() }} - Modification de projets {% endblock %}
+
+{% block contenu %}
+
+{% if form.projet is defined %}
+    <!-- page content -->                  
+    <div class="" role="main">
+        <div class="row">            
+            <div class="x_panel" style="border-radius: 10px;">
+                <div class="x_title col-md-2">
+                    <h2>Modification du projet {{form.projet.libelle}}<small>Session</small></h2>
+                    <div class="clearfix"></div>
+                </div>
+                  
+                <div class="x_content ">
+
+                    <!-- start form for validation -->
+                    <form  action="index.php?page=projetmodif" method="post" enctype="application/x-www-form-urlencoded" class="col-md-8 col-md-offset-2">
+                        <input type="text" value="{{form.projet.id}}" id="id" name="id" style="display: none;">
+                        <label for="nom">Nom du projet :</label>
+                        <input type="text" id="nom" class="form-control" name="nom" value="{{form.projet.libelle}}" required />
+
+                        <label for="description">Description : <small class="text-muted">rapide et simple</small></label>
+                        <textarea id="description" name="description" value="{{form.projet.description}}" class="form-control" style="resize: none;" rows="5" cols="33" required>{{form.projet.description}}</textarea>
+
+                        <label for="responsable">Responsable du projet :</label>
+                        <input type="text" id="responsable" class="form-control" name="responsable" value="{{form.projet.responsable}}" readonly />
+
+                        <label for="budget">Budget : <small class="text-muted">sans espace</small></label>
+                        <input type="text" id="budget" class="form-control" name="budget" value="{{form.projet.budget}}" required />
+
+                        <label for="responsable">Date de lancement :</label>
+                        <input type="text" id="date_lancement" class="form-control" name="date_lancement" value="{{form.projet.date_lancement}}" readonly />
+
+                        <label for="date_livraison">Date de livraison :</label>
+                        <input type="text" id="date_livraison" class="form-control" name="date_livraison" value="{{form.projet.date_livraison}}" required />
+
+                        <input type="text" id="etat" name="etat" class="form-control" value="{{form.projet.etat}}"style="display: none;" />
+
+                        <label for="idEquipe">Equipe gérante :</label><br/>
+                        <input type="text" value="{{form.projet.idEquipe}}" id="idEquipe" name="idEquipe" style="display: none;">
+                        <div class="col-md-12">
+                        {% for e in form.equipe %}                            
+                            <div class="col-md-2">
+                                <div class="thumbnail-min">
+                                    <div class="image view view-first">
+                                    <img style="width: 100%; display: block;" src="production/images/user.png" alt="image" />
+                                    <div class="mask">
+                                        <a href="#">
+                                            <p>Voir le profil</p>
+                                            <div class="tools-min tools-bottom">
+                                                <a href="#"><i class="fa fa-folder-open-o"></i></a>
+                                            </div>
+                                            </a>
+                                    </div>
+                                    </div>
+                                    <div class="caption-min">
+                                        <p class="text-center">{{ e.prenom }} {{e.nom}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        </div>
+
+                            <br/>
+                            <button class="btn btn-light" style="float: left;"><a href="index.php?page=projetdetails&id={{form.projet.id}}" style="color: #522472;">Annuler</a></button>
+                            <button class="btn btn-simpleduc" style="float: right;" id="btModifProjet" name="btModifProjet">Valider</button>
+
+                    </form>
+                    <!-- end form for validations -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /page content -->
+{% else %}  
+     {% if form.valide == true %}
+         <h1 class="h3 mb-3 font-weight-normal">{{ form.message }} </h1>
+         <h2 class="h3 mb-3 font-weight-normal btn btn-simpleduc col-md-4 col-md-offset-4"><a href="index.php?page=projets" class="violet">Retourner sur la liste des projets</a></h2>
+     {% else %}    
+      <h1 class="alert alert-danger" role="alert">{{ form.message }}</h1> 
+         <h2 class="h3 mb-3 font-weight-normal btn btn-simpleduc col-md-4 col-md-offset-4"><a href="index.php?page=projets" class="violet">Retourner sur la liste des projets</a></h2>
+    {% endif %} 
+{% endif %}    
+
+{% endblock %}

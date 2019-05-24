@@ -1,0 +1,131 @@
+{% extends "base.html.twig" %}
+
+{% block title %} {{ parent() }} - Gestion des équipes {% endblock %}
+
+{% block contenu %}
+
+<div class="page-title">
+  <div class="clearfix"></div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h1>Gestion des équipes</h1>
+        </div>
+        <div class="x_content">
+            <div class="row">
+                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+                    <div class="icon"><i class="fa fa-sitemap"></i>
+                    </div>
+                    <div class="count">{{nbEquipe['0']['0']}}</div>
+
+                    <h3>Équipes</h3>
+                </div>
+                </div>
+                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+                    <div class="icon"><i class="fa fa-cube"></i>
+                    </div>
+                    <div class="count">{{nbResponsable['0']['0']}}</div>
+
+                    <h3>Responsables</h3>
+                </div>
+                </div>
+                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+                    <div class="icon"><i class="fa fa-cubes"></i>
+                    </div>
+                    <div class="count">{{nbMembre['0']['0']}}</div>
+
+                    <h3>Membres</h3>
+                </div>
+                </div>
+                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="tile-stats">
+                    <div class="icon"><i class="fa fa-folder-open"></i>
+                    </div>
+                    <div class="count">{{countProjet['0']['0']}}</div>
+
+                    <h3>Projets</h3>
+                </div>
+                </div>
+            </div>
+
+            <h2>Liste des équipes</h2>
+            {% if form.valide is defined %}
+            {% if form.valide == true %}
+            <h1 class="h3 mb-3 font-weight-normal alert-success">{{ form.message }}</h1>
+            {% else %}
+            <h1 class="alert alert-danger" role="alert">{{ form.message }}</h1>
+            {% endif %}
+            {% endif %}
+
+            <div class="form-group pull-left">
+                <input type="text" class="search form-control" placeholder="Recherche">
+            </div>
+            <span class="counter pull-left"></span>
+            {% if session.login is defined %}
+            {% if session.role == 1 or session.dev == 1 %}
+            <button class="btn pull-right background-violet" type="button" data-toggle="modal" data-target="#modalAjout" href="#">
+                <span class="glyphicon glyphicon-plus"></span>&nbsp&nbsp<span class="">Ajouter une équipe</span>
+            </button>
+            {% endif %}
+            {% endif %}            
+                <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap results" cellspacing="0" width="100%" height="100%" style="margin-bottom: 10%;">
+                    <thead>
+                    <tr>
+                        <th>Nom de l'équipe</th>
+                        <th>Responsable</th>
+                        <th>Membres</th>
+                        <th>Nombres de projets</th>
+                        {% if session.role == 1 %}
+                        <th>Gérer</th>
+                        {% endif %}
+                    </tr>
+                    <tr class="warning no-result">
+                        <td colspan="10"><i class="fa fa-warning black">Pas de résultat</i></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for e in liste %}
+                            <tr>
+                                <td><a href="index.php?page=equipemembre&id={{e.id}}">{{e.libelle}}</a></td>
+                                <td>
+                                    {% if e.nom == true %}
+                                    <a href="index.php?page=utilisateurinfo&id={{e.idresponsable}}"><img src="production/images/user.png" class="avatar"    >&nbsp;{{e.nom}} {{e.prenom}}</a>
+                                    {% else %}
+                                    <span>Responsable non identifié<span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {{e.nbMembre}}
+                                </td>               
+                                <td>{{e.nbProjet}}</td>
+                                {% if session.login is defined %}
+                                {% if session.role == 1 %}
+                                <td>
+                                    <div class="btn-group btn-group-lg">
+                                        <a href="index.php?page=equipemodif&id={{e.id}}" class="btn btn-primary" style="font-size: 12px; padding: 5px 10px;"><span class="glyphicon glyphicon-pencil white" aria-hidden="true"></span></a>
+                                    </div>
+                                    <div class="btn-group btn-group-lg">
+                                        <a href="#" data-id="{{e.id}}" data-href="index.php?page=equipe&id={{e.id}}" data-toggle="modal" data-target="#confirm-delete" class="btn btn-danger" style="font-size: 12px; padding: 5px 10px;"><span class="glyphicon glyphicon-trash white" aria-hidden="true"></span></a>
+                                    </div>
+                                </td>
+                                {% endif %}
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal  Ajout/Suppression-->
+{% include "equipe/equipe-ajout.html.twig" %}
+{% include "equipe/equipe-supp.html.twig" %}
+
+
+{% endblock %}

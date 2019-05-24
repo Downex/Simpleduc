@@ -1,0 +1,63 @@
+{% extends "base.html.twig" %}
+
+{% block title %} {{ parent() }} - Modification d'une équipe {% endblock %}
+       
+{% block contenu %}
+
+{% if form.equipe is defined %} 
+    {% if form.equipe != null %}    
+        <div class="" role="main">
+            <div class="row">            
+                <div class="x_panel" style="border-radius: 10px;">
+                    <div class="x_content">
+                        <div class="x_title">
+                            <h1>Modification de <strong>{{form.equipe.libelle}}</strong></h1>
+                        </div>
+                        <form action="index.php?page=equipemodif" method="post" enctype="application/x-www-form-urlencoded" class="col-md-8 col-md-offset-2">
+                            <input type="hidden" id="id" name="id" value="{{form.equipe.id}}"/> 
+                            <label for="inputDesignation" class="sr-only">Libellé:</label>
+                            <input type="text" id="inputLibelle" name="inputLibelle" class="form-control" placeholder="Saisir un libellé" value="{{form.equipe.libelle}}" required autofocus>
+                            <br/>
+                            <label for="inputIdResponsable" class="sr-only">Responsable:</label>
+                            <select name="inputIdResponsable" class="form-control">
+                            {% if session.role == 1 %}
+                                {% if form.equipe.idResponsable == null %} 
+                                    <option value="non" selected>Responsable non identifié</option> 
+                                {% else %}
+                                    <option value="non">Responsable non identifié</option>
+                                {% endif %}      
+                                {% for u in form.liste %}
+                                    {% if form.equipe.idresponsable == u.idDev %}  
+                                        <option value="{{ u.idDev }}" selected>{{ u.nom }} {{ u.prenom }}</option> 
+                                    {% else %} 
+                                        <option value="{{ u.idDev }}">{{ u.nom }} {{ u.prenom }}</option>
+                                    {% endif %}      
+                                {% endfor %}
+                            {% else %}
+                                <option value="{{session.login}}" selected>{{ session.nom }} {{ session.prenom }}</option>
+                            {% endif %}
+                            </select>
+                            <br/>    
+                            <button class="col-md-3" style="float: right;" type="submit" name="btModifier">Modifier</button>
+                        </form>
+                        </div>
+                    </div>
+                </div> 
+            </div> 
+
+        {% else %}  
+            {% if form.valide == true %}
+                <h1 class="h3 mb-3 font-weight-normal">{{ form.message }} </h1>
+                <h1 class="h3 mb-3 font-weight-normal"><a href="index.php?page=equipe" class="violet">Retourner sur la liste des équipes</a></h1>
+            {% else %}    
+                <h1 class="alert alert-danger" role="alert">{{ form.message }}</h1> 
+                <h1 class="h3 mb-3 font-weight-normal"><a href="index.php?page=equipe" class="violet">Retourner sur la liste des équipes</a></h1>
+            {% endif %} 
+        {% endif %} 
+    {% else %} 
+        <h1 class="alert alert-danger" role="alert">{{ form.message }}</h1> 
+        <h1 class="h3 mb-3 font-weight-normal"><a href="index.php?page=equipe" class="violet">Retourner sur la liste des équipes</a></h1>      
+    {% endif %}
+    
+{% endblock %} 
+

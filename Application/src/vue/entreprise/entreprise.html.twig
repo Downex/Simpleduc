@@ -1,0 +1,65 @@
+{% extends "base.html.twig" %}
+
+{% block title %} {{ parent() }} - Gestion des entreprises {% endblock %}
+
+{% block contenu %} <h1> Gestion des entreprises </h1>
+
+{% if form.valide is defined %}
+{% if form.valide == true %}
+<h1 class="h3 mb-3 font-weight-normal">{{ form.message }}</h1>
+{% else %}
+<h1 class="alert alert-danger" role="alert">{{ form.message }}</h1>
+{% endif %}
+{% endif %}
+
+<div class="panel">
+    <!-- Default panel contents -->
+    <div class="panel-heading background-violet">
+        <span>Liste des entreprises</span>
+        <div class="pull-right">
+            <a class="blanc" data-toggle="modal" data-target="#modalAjout" href="#">Ajouter une entreprise</a>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-responsive">
+        <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap results" cellspacing="0" width="100%" height="100%" style="margin-bottom: 10%;">
+            <tr>
+                <th>Nom</th>
+                <th>Adresse</th>
+                <th>Code Postal</th>
+                <th>Ville</th>
+                <th>Nom du Contact</th>
+            </tr>
+            {% for e in liste %}
+            <tr>
+                <td>{{e.NomEntreprise}}</td>
+                <td>{{e.adresse}}</td>
+                <td>{{e.cp}}</td>
+                <td>{{e.ville}}</td>
+                <td>{{e.nomContact}}</td>
+                <td>
+					<div class="btn-group btn-group-lg">
+						{%if session.login is defined %}
+                        {%if session.role == 1 %}
+                            <a href="index.php?page=entreprisemodif&id={{entreprise.idEntreprise}}" class="btn btn-primary" style="font-size: 12px; padding: 5px 10px;"><span class="glyphicon glyphicon-pencil white" aria-hidden="true"></span></a>
+                        </div>
+                </td>
+                <td>
+					<div class="btn-group btn-group-lg">
+                            <a href="#" data-id="{{e.id}}" data-href="index.php?page=entreprise&id={{entreprise.idEntreprise}}" data-toggle="modal" data-target="#confirm-delete" class="btn btn-danger" style="font-size: 12px; padding: 5px 10px;"><span class="glyphicon glyphicon-trash white" aria-hidden="true"></span></a>
+                        {% endif %}
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+<!-- Modal  Ajout/Modification-->
+{% include "entreprise/entreprise-ajout.html.twig" %}
+{% include "entreprise/entreprise-modif.html.twig" %}
+
+{% endblock %}

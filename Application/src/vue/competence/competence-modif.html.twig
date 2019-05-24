@@ -1,0 +1,59 @@
+{% extends "base.html.twig" %}
+{% block style %}<link href="css/style-signin.css" rel="stylesheet"> {% endblock %}
+{% block title %} {{ parent() }} - Modifier une compétence {% endblock %}
+       
+{% block contenu %} 
+
+<div class="page-title">
+  <div class="clearfix"></div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel" style="height: 630px;">
+        <div class="x_title">
+          <h1>Modification de compétence</h1>
+        </div>
+        <div class="x_content">
+          <div class="col-md-8 col-md-offset-2">
+          {% if form.competence is defined %} 
+              {% if form.competence != null %}
+                <form class="form-signin" action="index.php?page=competencemodif" method="post" enctype="application/x-www-form-urlencoded">
+                  <label for="libelle">Nom de compétence :</label>
+                  <input type="text" id="libelle" name="libelle" class="form-control" value="{{form.competence.libelle}}" required>
+                  
+                  <label for="idDomaine">Domaine :</label>
+                  <select class="form-control" id="idDomaine" name="idDomaine" required>
+                  {% for domaine in form.domaine %}
+                      {% if form.competence.idDomaine == domaine.idDomaine %}
+                      <option value="{{ domaine.idDomaine }}" selected>{{ domaine.nomDomaine }}</option>
+                      {% else %}
+                      <option value="{{ domaine.idDomaine }}">{{ domaine.nomDomaine }}</option>   
+                      {% endif %}    
+                  {% endfor %}        
+                  </select>
+                  <br />
+                  
+                  <input type="hidden" name="idCompetence" value="{{ form.competence.idCompetence }}"/>
+                  <button class="btn btn-simpleduc col-md-3" type="submit" name="btModifCompetence" style="float: right;">Modifier</button>
+              
+                </form>
+              {% else %} 
+                <h1 class="alert alert-danger" role="alert">{{ form.message }}</h1> 
+                <h1 class="h3 mb-3 font-weight-normal"><a href="index.php?page=competence" class="violet">Retourner sur la liste des compétences</a></h1>
+              {% endif %}     
+            
+          {% else %}  
+              {% if form.valide == true %}
+                  <h1 class="h3 mb-3 font-weight-normal">{{ form.message }} </h1>
+                  <h1 class="h3 mb-3 font-weight-normal"><a href="index.php?page=competence" class="violet">Retourner sur la liste des compétences</a></h1>
+              {% else %}    
+                <h1 class="alert alert-danger" role="alert">{{ form.message }}</h1> 
+                <h1 class="h3 mb-3 font-weight-normal"><a href="index.php?page=competence" class="violet">Retourner sur la liste des compétences</a></h1>
+              {% endif %} 
+          {% endif %}
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %} 
+

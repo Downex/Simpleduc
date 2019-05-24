@@ -1,0 +1,103 @@
+{% extends "base.html.twig" %}
+
+{% block title %} {{ parent() }} - Gestion des domaines {% endblock %}
+
+{% block contenu %}
+
+<div class="page-title">
+  <div class="clearfix"></div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel">
+        <div class="x_title">
+          <h1> Gestion des domaines </h1>
+        </div>
+        <div class="x_content">
+            <div class="row">
+                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12 col-md-offset-3">
+                    <div class="tile-stats">
+                        <div class="icon">
+                            <i class="fa fa-code-fork"></i>
+                        </div>
+                        <div class="count">{{count[0]}}</div>
+
+                        <h3>Domaines</h3>
+                    </div>
+                </div>
+                <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                    <div class="tile-stats">
+                        <div class="icon">
+                            <i class="fa fa-cogs"></i>
+                        </div>
+                        <div class="count">{{countComp[0]}}</div>
+                        <h3>Compétences</h3>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Liste des domaines</h2>
+            {% if form.valide is defined %}
+                {% if form.valide == true %}
+                    <h1 class="h3 mb-3 font-weight-normal">{{ form.message }}</h1>
+                {% else %}
+                    <h1 class="alert alert-danger" role="alert">{{ form.message }}</h1>
+                {% endif %}
+            {% endif %}
+
+            <div class="form-group pull-left">
+                <input type="text" class="search form-control" placeholder="Recherche">
+            </div>
+            <span class="counter pull-left"></span>
+            {% if session.login is defined %}
+                {% if session.role == 1 %}
+                    <button class="btn pull-right background-violet" type="button" data-toggle="modal" data-target="#modalAjout" href="#">
+                        <span class="glyphicon glyphicon-plus"></span>&nbsp&nbsp<span class="">Ajouter un domaine</span>
+                    </button>
+                {% endif %}
+            {% endif %}  
+
+        <!-- Table -->     
+            <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap results" cellspacing="0" width="100%" height="100%" style="margin-bottom: 10%;">
+            <thead>
+                    <tr>
+                        <th width="5%">#</th>
+                        <th>nom de domaine</th>
+                        {% if session.role == 1 %}
+                            <th width="8%">Gérer</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                {% for domaine in form.domaine %}
+                <tr>
+                    <td>{{domaine.idDomaine}}</td>
+                    <td>{{domaine.nomDomaine}}</td>
+                    {% if session.login is defined %}
+                        {% if session.role == 1 %}
+                            <td>
+                                <div class="btn-group btn-group-lg">
+                                    <a href="index.php?page=domainemodif&id={{domaine.idDomaine}}" class="btn btn-primary" style="font-size: 12px; padding: 5px 10px;"><span class="glyphicon glyphicon-pencil white" aria-hidden="true"></span></a>
+                                </div>
+                                <div class="btn-group btn-group-lg">
+                                    <a href="#" data-id="{{e.id}}" data-href="index.php?page=domaine&id={{domaine.idDomaine}}" data-toggle="modal" data-target="#confirm-delete" class="btn btn-danger" style="font-size: 12px; padding: 5px 10px;"><span class="glyphicon glyphicon-trash white" aria-hidden="true"></span></a>
+                                </div>
+                            </td>
+                        {% endif %}
+                    {% endif %}
+                </tr>
+                {% endfor %}
+                <tbody>
+            </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Modal  Ajout/Modification-->
+{% include "domaine/domaine-ajout.html.twig" %}
+{% include "domaine/domaine-supp.html.twig" %}
+
+{% endblock %}

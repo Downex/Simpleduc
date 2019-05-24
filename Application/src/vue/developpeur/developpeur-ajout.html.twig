@@ -1,0 +1,59 @@
+{% extends "base.html.twig" %}
+{% block style %}<link href="css/style-signin.css" rel="stylesheet"> {% endblock %}
+{% block title %} {{ parent() }} - Se déclarer développeur {% endblock %}
+
+{% block contenu %}
+    <h1>Se déclarer développeur</h1>
+    <div class="container-fluid well span6">
+        <form method="post" action="index.php?page=ajoutdeveloppeur" enctype="application/x-www-form-urlencoded" class="offset-md-6">
+            <div class="form-group col-md-offset-3 col-md-6">
+                <input type="text" class="form-control" id="idDev" name="idDev" value="{{ session.login }}" readonly>
+                <br />
+                <input type="text" class="form-control" id="nom" name="nom" value="{{ session.nom }}" readonly>
+                <br/>
+                <input type="text" class="form-control" id="prenom" name="prenom" value="{{ session.prenom }}" readonly>
+                <br />
+                <input type="text" class="form-control" id="tel" name="tel" placeholder="téléphone" onchange="checkForm(this)">
+                <br />
+                <input type="text" class="form-control" id="indiceRemuneration" name="indiceRemuneration" placeholder="indice de rémunération" onchange="checkForm(this)">
+                <br />
+                <select class="form-control" id="idRem" name="idRem" onchange="checkForm(this)">
+                    <option value="0" selected>Coût Horaire</option>
+                    {% for dev in listeRemuneration %}
+                        <option value="{{dev.idRem}}">{{dev.coutHoraire}}€</option> 
+                    {% endfor %}  
+                </select>
+                <br /><br />
+                <button type="submit" name="btAjoutDev" id="btAjoutDev" class="btn btn-primary 
+                    col-md-offset-4 col-md-4 col-md-offset-4 col-xs-offset-4 col-xs-4 col-xs-offset-4">CONFIRMER</button>
+                <br/>
+                <script>
+                    function checkForm(txt){
+                        var submitBtn = document.getElementById('btAjoutDev');
+                        var input = document.getElementsByTagName('input');
+                        var select = document.getElementsByTagName('select');
+                        for (i = 0; i < input.length; i++){
+                            if(input [i].type == 'text' && input[i].value == '' && select.option.value == '0'){
+                                submitBtn.disabled = true;
+                                return false;
+                            }
+                        }els{
+                            submitBtn.disabled = false;
+                        }
+                    }
+                </script>
+                {%if form.valide is not defined %} 
+                {% else %}
+                    {% if form.valide == true %}
+                        <h1 class="h3 col-md-12 col-xs-12 font-weight-normal">Déclaration réussie</h1>
+                        <span class="h3 col-md-12 col-xs-12 font-weight-normal">Vous êtes maintenant un développeur du site </span>
+                    {% else %}
+                        <h1 class="h3 col-md-12 col-xs-12 font-weight-normal">Une erreur est survenue</h1> 
+                        <span class="alert alert-danger col-md-12 col-xs-12" role="alert">{{ form.message }} <span class="glyphicon glyphicon-warning-sign"></span></span> 
+                    {% endif %}       
+                {% endif %}  
+            </div>
+        </form>   
+</div> 
+
+{% endblock %}

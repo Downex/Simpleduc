@@ -1,0 +1,28 @@
+<!-- Modal -->
+<div class="modal fade" id="modalAjout" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Ajouter un domaine</h4>
+            </div>
+            <div class="modal-body">
+                <div class="panel-body">
+                    <form class="form-signin" action="index.php?page=domaineajout" method="post" enctype="application/x-www-form-urlencoded">
+                        <div class="form-group">
+                            <label for="nomDomaine">Nom de domaine :</label>
+                            <input type="text" id="nomDomaine" name="nomDomaine" class="form-control" placeholder="Nom de domaine"
+                                required autofocus>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-default pull-left background-violet" type="submit" name="btAjoutDomaine">Ajouter</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

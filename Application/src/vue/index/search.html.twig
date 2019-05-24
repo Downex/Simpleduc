@@ -1,0 +1,159 @@
+{% extends "base.html.twig" %}
+
+{% block title %} {{ parent() }} - Recherche {% endblock %}
+
+{% block contenu %}
+
+{% if form.valide is defined %}
+    {% if form.valide == true %}
+        <h1 class="h3 mb-3 font-weight-normal">{{ form.message }}</h1>
+    {% else %}
+        <h1 class="alert alert-danger" role="alert">{{ form.message }}</h1>
+    {% endif %}
+{% endif %}
+
+<div class="">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+            {% if projets == NULL and user == NULL and equipe == NULL and competence == NULL %}
+                <div class="text-center"><i class="glyphicon glyphicon-search"></i></div>
+            {% else %}
+                <h2>Résultats de recherche pour ' {{search}} '</h2>
+            {% endif %}
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+            {% if projets == NULL and user == NULL and equipe == NULL and competence == NULL %}
+                <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                    <p style="font-size: 24px;">Aucun réusltats pour '{{search}}' !</p>
+                </div>
+            {% endif %}
+            {% if projets != NULL %}
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <h2>Projets</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                <ul class="list-unstyled timeline">
+                {% for p in projets %}
+                    <li>
+                    <div class="block">
+                        <div class="tags">
+                        <a href="" class="tag">
+                            <span>{{p.date_lancement}}</span>
+                        </a>
+                        </div>
+                        <div class="block_content">
+                            <h2 class="title">
+                                <a>
+                                    {{p.libelle}}
+                                    {% if p.etat == "En cours" %}
+                                        <button type="button" class="btn btn-simpleduc btn-xs">{{p.etat}}</button>
+                                    {% elseif p.etat == "Démarrage" %}
+                                        <button type="button" class="btn btn-warning btn-xs">{{p.etat}}</button>
+                                    {% elseif p.etat == "Terminé" %}
+                                        <button type="button" class="btn btn-success btn-xs">{{p.etat}}</button>
+                                    {% endif %}
+                                </a>
+                            </h2>
+                            <div class="byline">
+                                <span>responsable : {{p.responsable}}</span>
+                            </div>
+                            <p class="excerpt">{{p.description}}</p>
+                        </div>
+                    </div>
+                    </li>
+                {% endfor %}
+                </ul>
+
+                </div>
+            {% endif %}
+            {% if user != NULL %}
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <h2>Utilisateurs</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <ul class="list-unstyled msg_list">
+                    {% for u in user %}
+                        <li>
+                            <a>
+                                <span class="image">
+                                    <img src="production/images/user.png" alt="img" alt="Avatar"/>
+                                </span>
+                                <span>
+                                    <p style="font-size: 24px; color: #522472;">{{u.prenom}} {{u.nom}}</p>
+                                </span>
+                                <span>
+                                    {% if u.libelle == "Utilisateur" %}
+                                        {{ u.libelle }}
+                                    {% else %}
+                                        {{ u.libelle }}
+                                        {% if u.dev == 1 %} Développeur {% endif %}
+                                    {% endif %}
+                                </span>
+                                <br/>
+                                <span>
+                                    <span>adresse mail : {{u.email}}</span>
+                                </span>
+                            </a>
+                                <span style="float: right; margin-top: 5%;">
+                                    <a href="index.php?page=utilisateurinfo&id={{u.email}}">
+                                        <button class="btn btn-simpleduc btn-xs">Voir le Profil</button>
+                                    </a>
+                                </span>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            {% if equipe != NULL %}
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <h2>Équipes</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <ul class="list-unstyled">
+                    {% for e in equipe %}
+                        <li>                     
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div class="tile-stats">
+                                    <div class="icon">
+                                        <i class="fa fa-sitemap"></i>
+                                    </div>
+                                    <div class="count"><a href="index.php?page=equipemembre&id={{e.id}}">{{e.libelle}}</a></div>
+                                    <p><span>Responsable :</span><span style="font-size: 20px; margin-left: 0.2%;">{{e.prenom}} {{e.nom}}</span></p>
+                                    <p>adresse mail : <span style="font-size: 14px;">{{e.idResponsable}}</span></p>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            {% if competence != NULL %}
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <h2>Compétences</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div>
+                    {% for c in competence %}
+                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12" style="border-radius: 15% !important;">
+                            <div class="tile-stats">
+                                <div class="text-center" style="font-size: 24px; font-weight: 700;">{{c.libelle}}</a></div>
+                                <p><span style="font-size: 16px; float: right; margin-right: 4%;">{{c.nomDomaine}}</span></p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

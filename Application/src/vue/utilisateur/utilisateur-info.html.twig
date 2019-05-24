@@ -1,0 +1,198 @@
+{% extends "base.html.twig" %}
+{% block style %}<link href="css/style-signin.css" rel="stylesheet"> {% endblock %}
+{% block title %} {{ parent() }} - Info {% endblock %}
+       
+{% block contenu %} 
+<div class="page-title">
+            
+  <div class="clearfix"></div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel" style="min-height: 630px;">
+        <div class="x_content">
+          <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+            <div class="profile_img">
+              <div id="crop-avatar">
+                <!-- Current avatar -->
+                <!-- <img class="img-responsive avatar-view" src="images/picture.jpg" alt="Avatar" title="Change the avatar"> -->
+                <p><span style="text-transform: uppercase;">{{form.utilisateur.initial}}</p>
+              </div>
+            </div>
+            <h3>{{ form.utilisateur.prenom }}</span> <span style="text-transform: uppercase;">{{ form.utilisateur.nom }}</span></h3>
+
+            <ul class="list-unstyled user_data">
+              <li>
+                  <i class="fa fa-envelope-o user-profile-icon"></i> {{ form.utilisateur.email }}
+              </li>
+              <li>
+              {% if unRole.id == 1 and form.utilisateur.dev == 1 %}
+                  <i class="fa fa-sun-o user-profile-icon"></i> Administrateur & Développeur
+              {% elseif form.utilisateur.dev == 1 %}
+                  <i class="fa fa-user user-profile-icon"></i> Développeur
+              {% else %}
+                  <i class="fa fa-code user-profile-icon"></i> {{ unRole.libelle }}
+              {% endif %}
+              </li>
+            </ul>
+              {% if form.utilisateur.email == session.login or session.role == 1%}
+                  <a class="btn btn-simpleduc" href="index.php?page=utilisateurmodif&id={{form.utilisateur.email}}"><i class="fa fa-edit m-right-xs"></i> Editer le Profil</a>
+              {% endif %}
+            <br />
+
+            <!-- start skills -->
+            
+            {% if form.utilisateur.dev != NULL %}
+              <h4>Compétences</h4>
+                {% if tab == 0 %}
+                  {% if session.login == form.utilisateur.email %}
+                  <span style="color: red;">Vous n'avez pas de compétences ? Pensez à préciser quelles compétences vous maitrisez !</span>
+                  <br/>
+                  <a href="index.php?page=competenceList" class="btn btn-simpleduc">Voir la liste des compétences
+                      <span class="glyphicon glyphicon-th-list white" aria-hidden="true"></span>
+                  </a>
+                  {% endif %}
+                {% else %}
+                  {% set i = 0 %}
+                  <ul class="list-unstyled user_data">
+                    {# {% for moy in domaine.moy %}
+                      <span>{{moy}}</span>
+                    {% endfor %} #}
+                    {% for dom in domaine %}
+                      {% if i != 5 %}
+                        <li>
+                          <span>{{dom.nomDomaine}} </span><span style="float: right; font-size: 11px;">{{moy[i]}} %</span>
+                          <div class="progress progress_sm">
+                            <div class="progress-bar bg-simpleduc" role="progressbar" data-transitiongoal="{{moy[i]}}"></div>
+                          </div>
+                        </li>
+                      {% endif %}
+                      {% set i = i+1 %}
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              {% endif %}
+            <!-- end of skills -->
+
+          </div>
+          <div class="col-md-9 col-sm-9 col-xs-12">
+            <div class="" role="tabpanel" data-example-id="togglable-tabs">
+              <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                  <li role="presentation" class="active">
+                      <a href="#tab_content" role="tab" id="home-tab" data-toggle="tab" aria-expanded="true">
+                          {% if session.login == form.utilisateur.email %}
+                              Mes projets
+                          {% else %}
+                              Projets de l'utilisateur
+                          {% endif %}
+                      </a>
+                  </li>
+                  <li role="presentation" class="">
+                      <a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">
+                          {% if session.login == form.utilisateur.email %}
+                              Mes equipes
+                          {% else %}
+                              Equipe de l'utilisateur
+                          {% endif %}
+                      </a>
+                  </li>
+                  {% if form.utilisateur.dev != null %}
+                      <li role="presentation" class=""><a href="#tab_content3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Profil Développeur</a>
+                      </li>
+                  {% endif %}
+              </ul>
+              <div id="myTabContent" class="tab-content">
+                <div role="tabpanel" class="tab-pane fade active in" id="tab_content" aria-labelledby="home-tab">
+
+                  <!-- start user projects -->
+                  <table class="data table table-striped no-margin">
+                    <thead>
+                      <tr>
+                        <th>Nom du projet</th>
+                        <th>Responsable</th>
+                        <th>Date de lancement</th>
+                        <th>Date de livraison</th>
+                        <th>Etat</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                  {% set i = 0 %}
+                  {% for p in form.myprojet %}
+                      <tr>
+                        <td>{{p.libelle}}</td>
+                        <td>{{p.responsable}}</td>
+                        <td>{{p.date_lancement}}</td>
+                        <td class="hidden-phone">{{p.date_livraison}}</td>
+                        <td class="vertical-align-mid">
+                          {% if p.etat == 'En cours' %}
+                              <button type="button" class="btn btn-simpleduc btn-xs">{{p.etat}}</button>
+                          {% elseif p.etat == 'Terminé' %}
+                              <button type="button" class="btn btn-success btn-xs">{{p.etat}}</button>
+                          {% else %}
+                          <button type="button" class="btn btn-warning btn-xs">{{p.etat}}</button>
+                          {% endif %}
+                        </td>
+                      </tr>
+                      {% set i = i+1 %}
+                  {% endfor %}
+                    </tbody>
+                  </table>
+                  <!-- end user projects -->
+
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
+
+                  <!-- start user projects -->
+                  <table class="data table table-striped no-margin">
+                    <thead>
+                      <tr>
+                        <th>Libelle</th>
+                        <th>Responsable</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for e in uneEquipe %}
+                        <tr>
+                            <td>
+                                <a href="index.php?page=equipemembre&id={{e.id}}">{{e.libelle}}</a>
+                            </td>
+                            <td>
+                            {% if e.idresponsable == session.login %}
+                              Vous
+                            {% else %}
+                              <a href="index.php?page=equipemembre&id={{e.id}}">{{e.nom}} {{e.prenom}}</a>
+                            {% endif %}
+                            </td>
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+                  <!-- end user projects -->
+                <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
+                  <p><strong>Nom de développeur :</strong> {{ form.developpeur.prenom }} {{ form.developpeur.nom }}</p>
+                  <p><strong>Téléphone professionnel :</strong> {{ form.developpeur.tel }}</p>
+                  <p><strong>indice de rémunération :</strong> {{ form.developpeur.indiceRemuneration }}</p>
+                  {% if session.login == form.utilisateur.email %}
+                    <a href="index.php?page=competenceList" class="btn btn-simpleduc" style="float: right;">Voir la liste des compétences
+                        <span class="glyphicon glyphicon-th-list white" aria-hidden="true"></span>
+                    </a>
+                  {% endif %}
+                  {# {% if form.utilisateur.email == session.login %}
+                  <div class="text-right">
+                      <a href="index.php?page=developpeurmodif&id={{form.developpeur.idDev}}" class="btn btn-primary">Modifier mon profil développeur 
+                          <span class="glyphicon glyphicon-pencil white" aria-hidden="true"></span>
+                      </a>
+                      <a href="index.php?page=developpeursupp&id={{form.developpeur.idDev}}" class="btn btn-danger">Ne plus être développeur 
+                          <span class="glyphicon glyphicon-trash white" aria-hidden="true"></span>
+                      </a>
+                  </div>
+                  {% endif %} #}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} 

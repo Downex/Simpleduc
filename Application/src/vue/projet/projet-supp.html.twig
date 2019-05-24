@@ -1,0 +1,26 @@
+{% if session.login is defined %}
+<!-- Modal -->
+<div class="modal fade" id="suppprojet" tabindex="-1" role="dialog" aria-labelledby="suppprojet" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h3 class="modal-title" id="suppprojet">Êtes-vous sûr de vouloir supprimer ce projet ?</h3>
+      </div>
+      <div class="modal-body">
+        Êtes-vous sûr de vouloir supprimer le projet {{projet.libelle}}<br/>
+        Une fois ce projet supprimé, toutes les informations sur celui-ci seront supprimées elles aussi. L'équipe affectée ne sera plus affectée et aucun retour en arrière ne sera possible.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+        <form action="index.php?page=projetsupp" method="post" enctype="application/x-www-form-urlencoded" class="col-md-8 col-md-offset-2">
+            <input type="text" id="idProjet" name="idProjet" value="{{projet.id}}" style="display: none;">
+            <button type="submit" id="dltProjet" name="dltProjet" class="btn btn-danger">Supprimer</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}

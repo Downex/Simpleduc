@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+{% block style %}<link href="css/style-signin.css" rel="stylesheet"> {% endblock %}
+{% block title %} {{ parent() }} - Modifier un domaine {% endblock %}
+       
+{% block contenu %} 
+
+<div class="page-title">
+  <div class="clearfix"></div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+      <div class="x_panel" style="height: 630px;">
+        <div class="x_title">
+          <h1>Modification de compétence</h1>
+        </div>
+        <div class="x_content">
+          <div class="col-md-8 col-md-offset-2">
+            {% if form.domaine is defined %} 
+                {% if form.domaine != null %}
+                  <form class="form-signin" action="index.php?page=domainemodif" method="post" enctype="application/x-www-form-urlencoded">
+                    <label for="nomDomaine">Nom de domaine :</label>
+                    <input type="text" id="nomDomaine" name="nomDomaine" class="form-control" value="{{form.domaine.nomDomaine}}" required>
+                    <br />
+                    
+                    <input type="hidden" name="idDomaine" value="{{ form.domaine.idDomaine }}"/>
+                    <button class="btn btn-simpleduc col-md-3" type="submit" name="btModifDomaine" style="float: right;">Modifier</button>
+                
+                  </form>
+                {% else %} 
+                  <h1 class="alert alert-danger" role="alert">{{ form.message }}</h1> 
+                  <h1 class="h3 mb-3 font-weight-normal"><a href="index.php?page=domaine" class="violet">Retourner sur la liste des domaines</a></h1>
+                {% endif %}     
+              
+            {% else %}  
+                {% if form.valide == true %}
+                    <h1 class="h3 mb-3 font-weight-normal">{{ form.message }} </h1>
+                    <h1 class="h3 mb-3 font-weight-normal"><a href="index.php?page=domaine" class="violet">Retourner sur la liste des domaines</a></h1>
+                {% else %}    
+                  <h1 class="alert alert-danger" role="alert">{{ form.message }}</h1> 
+                  <h1 class="h3 mb-3 font-weight-normal"><a href="index.php?page=domaine" class="violet">Retourner sur la liste des domaines</a></h1>
+                {% endif %} 
+            {% endif %}
+          </div>
+      </div>
+    </div>
+  </div>
+</div>  
+
+{% endblock %} 
+

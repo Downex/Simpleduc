@@ -1,0 +1,35 @@
+    <!-- Modal -->
+    <div class="modal fade" id="modalAjout" role="dialog"> 
+        <div class="modal-dialog">
+        
+        <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Ajouter une entreprise</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="panel-body">
+                        <form  class="form-signin" action="index.php?page=entrepriseajout" method="post" enctype="application/x-www-form-urlencoded">
+                            <label for="inputNomEntreprise" class="sr-only">Nom Entreprise :</label>
+								<input type="text" id="inputNomEntreprise" name="inputNomEntreprise" class="form-control" placeholder="Saisir le nom de votre Entreprise" required autofocus>
+								<label for="inputAdresse" class="sr-only">Adresse :</label>
+								<input type="text" id="inputAdresse" name="inputAdresse" class="form-control" placeholder="Saisir une Adresse" required autofocus >
+								<label for="inputCp" class="sr-only">Code Postal :</label>
+								<input type="text" id="inputCp" name="inputCp" class="form-control" placeholder="Saisir un Code Postal" required>
+								<label for="inputVille" class="sr-only">Ville :</label>
+								<input type="text" id="inputVille" name="inputVille" class="form-control" placeholder="Saisir une Ville" required>
+								<label for="inputNomContact" class="sr-only">Nom du Contact :</label>
+								<input type="text" id="inputNomContact" name="inputNomContact" class="form-control" placeholder="Saisir le Nom du contact" required>
+                            <div class="modal-footer">
+                                <button class="btn btn-default pull-left background-violet" type="submit" data-toggle="modal" data-target="#modalPopUp" name="btAjouter">Ajouter</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                            </div> 
+                        </form>
+                    </div>    
+                </div>
+            </div>    
+        </div>
+    </div>
+
+

@@ -1,0 +1,396 @@
+{% extends "base.html.twig" %}
+
+{% block title %} {{ parent() }} - Projets {% endblock %}
+
+{% block contenu %}
+
+    <div class="col-md-12">
+    <div class="x_panel">
+        <div>
+            <div class="col-md-12">
+                <div>
+                    <div class="x_title">
+                        <h2>Mes projets</h2>                        
+                        <a href="index.php?page=projetajout" class="btn btn-simpleduc" style="float: right;">Ajouter un nouveau projet</a>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+        {% set i = 0 %}
+            {% for p in form.myprojet %}
+            {# {% set line = form.myprojet %} #}
+                {# {% for l in p %} #}
+                <div class="col-md-55">
+                <div class="thumbnail">
+                    <div class="image view view-first">
+                    <img style="width: 100%; display: block;" src="build/images/projet-image.png" alt="image" />
+                    <div class="mask">
+                    {% if p.responsable == session.login %}
+                        <p>Responsable</p>
+                        <div class="tools tools-bottom">
+                            <a href="index.php?page=projetdetails&id={{p.projet}}"><i class="fa fa-folder-open-o"></i></a>
+                            <a href="index.php?page=projetmodif&id={{p.projet}}"><i class="fa fa-pencil"></i></a>
+                        </div>
+                    {% else %}
+                        <p>Membre</p>
+                        <div class="tools tools-bottom">
+                            <a href="index.php?page=projetdetails&id={{p.projet}}"><i class="fa fa-folder-open-o"></i></a>
+                        </div>
+                    {% endif %}
+                    </div>
+                    </div>
+                    <div class="caption">
+                    <p>{{ p.libelle }}</p>
+                    </div>
+                </div>
+                </div>
+                {# {% endfor %}
+                fin l
+                {% set i = i+1 %} #}
+            {% endfor %}
+            </div>
+        <div class="x_title">
+        <h2>Liste des projets</h2>
+        
+        <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+
+        <!-- start project list -->
+        <table class="table table-striped projects">
+            <thead>
+            <tr>
+                <th style="width: 20%">Nom du projet</th>
+                <th style="width: 15%">Responsable</th>
+                <th>Participants</th>
+                <th>Entreprise Cliente</th>
+                <th>Status</th>
+                {% if session.role == 1 %}
+                <th>Gérer</th>
+                {% endif %}
+            </tr>
+            </thead>
+            <tbody>
+                {% for p in form.projet %}
+                    <tr>
+                        <td>
+                            <a href="index.php?page=projetdetails&id={{p.id}}">{{p.libelle}}</a>
+                            <br />
+                            <small>Créé le {{p.date_lancement}}</small>
+                        </td>
+                        <td style="line-height: 2.5;">
+                            <img src="production/images/user.png" class="avatar" alt="Avatar"><span style="margin-left: 5%;">{{p.prenom}} {{p.nom}}</span>
+                        </td>
+                        <td>
+                        <ul class="list-inline">
+                            <li>
+                            <img src="production/images/user.png" class="avatar" alt="Avatar">
+                            </li>
+                            <li>
+                            <img src="production/images/user.png" class="avatar" alt="Avatar">
+                            </li>
+                            <li>
+                            <img src="production/images/user.png" class="avatar" alt="Avatar">
+                            </li>
+                            <li>
+                            <img src="production/images/user.png" class="avatar" alt="Avatar">
+                            </li>
+                        </ul>
+                        </td>
+                        <td>
+                            <div>Nike</div>
+                        </td>
+                        <td>
+                        {% if p.etat == 'En cours' %}
+                            <button type="button" class="btn btn-simpleduc btn-xs">{{p.etat}}</button>
+                        {% elseif p.etat == 'Terminé' %}
+                            <button type="button" class="btn btn-success btn-xs">{{p.etat}}</button>
+                        {% else %}
+                        <button type="button" class="btn btn-warning btn-xs">{{p.etat}}</button>
+                        {% endif %}
+                        </td>
+                        {% if session.role == 1 %}
+                        <td>
+                            <div class="btn-group btn-group-lg">
+                                <a href="index.php?page=projetrmodif&id={{p.id}}" class="btn btn-primary" style="font-size: 12px; padding: 5px 10px;"><span class="glyphicon glyphicon-pencil white" aria-hidden="true"></span></a>
+                            </div>
+                            <div class="btn-group btn-group-lg">
+                                <a href="index.php?page=projet&id={{p.id}}" class="btn btn-danger" style="font-size: 12px; padding: 5px 10px;"><span class="glyphicon glyphicon-trash white" aria-hidden="true"></span></a>
+                            </div>
+                        </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <!-- end project list -->
+
+        </div>
+    </div>
+    </div>
+</div>
+ {# <!-- page content -->
+    <div class="page-title">
+        <div class="title_left">
+        </div>
+    </div>
+    
+    <div class="clearfix"></div>
+
+    <div class="row">
+        <div class="col-md-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h3>Réalisation application web cliente <small> design & développement</small></h3>
+            <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+
+            <div class="col-md-9 col-sm-9 col-xs-12">
+
+                <ul class="stats-overview">
+                <li>
+                    <span class="name"> Budget estimé </span>
+                    <span class="value text-success"> 200 300 </span>
+                </li>
+                <li>
+                    <span class="name"> Date de lancement </span>
+                    <span class="value text-success"> 4 février 2017 </span>
+                </li>
+                <li>
+                    <span class="name"> Date de livraison </span>
+                    <span class="value text-success"> 20 juillet 2020 </span>
+                </li>
+                </ul>
+                <br />
+
+                <div id="mainb" style="height:350px;"></div>
+
+                <div>
+
+                <h4>Activités Récentes</h4>
+
+                <!-- end of user messages -->
+                <ul class="messages">
+                    <li>
+                    <img src="images/img.jpg" class="avatar" alt="Avatar">
+                    <div class="message_date">
+                        <h3 class="date text-info">24</h3>
+                        <p class="month">May</p>
+                    </div>
+                    <div class="message_wrapper">
+                        <h4 class="heading">Desmond Davison</h4>
+                        <blockquote class="message">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth.</blockquote>
+                        <br />
+                        <p class="url">
+                        <span class="fs1 text-info" aria-hidden="true" data-icon=""></span>
+                        <a href="#"><i class="fa fa-paperclip"></i> User Acceptance Test.doc </a>
+                        </p>
+                    </div>
+                    </li>
+                    <li>
+                    <img src="images/img.jpg" class="avatar" alt="Avatar">
+                    <div class="message_date">
+                        <h3 class="date text-error">21</h3>
+                        <p class="month">May</p>
+                    </div>
+                    <div class="message_wrapper">
+                        <h4 class="heading">Brian Michaels</h4>
+                        <blockquote class="message">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth.</blockquote>
+                        <br />
+                        <p class="url">
+                        <span class="fs1" aria-hidden="true" data-icon=""></span>
+                        <a href="#" data-original-title="">Download</a>
+                        </p>
+                    </div>
+                    </li>
+                    <li>
+                    <img src="images/img.jpg" class="avatar" alt="Avatar">
+                    <div class="message_date">
+                        <h3 class="date text-info">24</h3>
+                        <p class="month">May</p>
+                    </div>
+                    <div class="message_wrapper">
+                        <h4 class="heading">Desmond Davison</h4>
+                        <blockquote class="message">Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua butcher retro keffiyeh dreamcatcher synth.</blockquote>
+                        <br />
+                        <p class="url">
+                        <span class="fs1 text-info" aria-hidden="true" data-icon=""></span>
+                        <a href="#"><i class="fa fa-paperclip"></i> User Acceptance Test.doc </a>
+                        </p>
+                    </div>
+                    </li>
+                </ul>
+                <!-- end of user messages -->
+
+
+                </div>
+
+
+            </div>
+
+            <!-- start project-detail sidebar -->
+            <div class="col-md-3 col-sm-3 col-xs-12">
+
+                <section class="panel">
+
+                <div class="x_title">
+                    <h2>Description du projet</h2>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-body">
+
+                    <p>Développement, Conception et ébergement d'application web Business to Customers pour l'entreprise cliente. Application web de vente en ligne avec terminal de paiement.</p>
+                    <br />
+
+                    <div class="project_detail">
+
+                    <p class="title">Entreprise Cliente</p>
+                    <p>Nike</p>
+                    <br />
+                    <p class="title">Responsable du projet</p>
+                    <p>François CAHIER</p>
+                    <p class="title">Membres du projet</p>
+                    <p>Nicolas CAZIN</p>
+                    <p>Simon TURBIEZ</p>
+                    <p>Florian BRASSART</p>
+                    <p>Julien LEGALES</p>
+                    <p>Simon CARLIER</p>
+                    <br />
+                    <p class="title">Nombre de merges totales</p>
+                    <p>8</p>
+                    <p class="title">Tâches réalisées</p>
+                    <p>562</p>
+                    </div>
+                </div>
+
+                </section>
+
+            </div>
+            <!-- end project-detail sidebar -->
+
+            </div>
+
+            
+            <table class="col-md-12" id="tableProjet">
+            <tr>
+                <th>À faire</th>
+                <th>En cours</th>
+                <th>Fait</th>
+            </tr>
+            
+            <tr>            
+                <td id="todo" ondrop="drop(event)" ondragover="allowDrop(event)">
+            
+                <div id="task1" class="post-it" draggable="true" ondragstart="drag(event)">
+                    <h4 draggable="false">Task 1</h4>
+                    <p  draggable="false">Lorem ipsum dolor sit amet</p>
+                </div>
+            
+                <div id="task2" class="post-it" draggable="true" ondragstart="drag(event)">
+                    <h4 draggable="false">Task 2</h4>
+                    <p  draggable="false">Lorem ipsum dolor sit amet</p>
+                </div>
+            
+                <div id="task3" class="post-it" draggable="true" ondragstart="drag(event)">
+                    <h4 draggable="false">Task 3</h4>
+                    <p  draggable="false">Lorem ipsum dolor sit amet</p>
+                </div>
+            
+                <div id="task4" class="post-it" draggable="true" ondragstart="drag(event)">
+                    <h4 draggable="false">Task 4</h4>
+                    <p  draggable="false">Lorem ipsum dolor sit amet</p>
+                </div>
+            
+                <div id="task5" class="post-it" draggable="true" ondragstart="drag(event)">
+                    <h4 draggable="false">Task 5</h4>
+                    <p  draggable="false">Lorem ipsum dolor sit amet</p>
+                </div>
+                </td>
+            
+                <td id="indev" ondrop="drop(event)" ondragover="allowDrop(event)">
+            
+                    <div id="task6" class="post-it" draggable="true" ondragstart="drag(event)">
+                    <h4 draggable="false">Task 6</h4>
+                    <p  draggable="false">Lorem ipsum dolor sit amet</p>
+                    </div>
+            
+                    <div id="task7" class="post-it" draggable="true" ondragstart="drag(event)">
+                    <h4 draggable="false">Task 7</h4>
+                    <p  draggable="false">Lorem ipsum dolor sit amet</p>
+                    </div>
+            
+                    <div id="task8" class="post-it" draggable="true" ondragstart="drag(event)">
+                    <h4 draggable="false">Task 8</h4>
+                    <p  draggable="false">Lorem ipsum dolor sit amet</p>
+                    </div>
+                </td>
+                <td id="done" ondrop="drop(event)" ondragover="allowDrop(event)">
+            
+                    <div id="task9" class="post-it" draggable="true" ondragstart="drag(event)">
+                    <h4 draggable="false">Task 9</h4>
+                    <p  draggable="false">Lorem ipsum dolor sit amet</p>
+                    </div>
+            
+                    <div id="task10" class="post-it" draggable="true" ondragstart="drag(event)">
+                    <h4 draggable="false">Task 10</h4>
+                    <p  draggable="false">Lorem ipsum dolor sit amet</p>
+                    </div>
+                </td>
+                
+                </td>
+            </tr>
+            </table>
+        </div>
+<!-- /page content --> #}
+{# <div class="panel">
+    <!-- Default panel contents -->
+    <div class="panel-heading background-violet">
+        <span>Liste des compétences</span>
+        <div class="pull-right">
+            <a class="blanc" data-toggle="modal" data-target="#modalAjout" href="#">Ajouter une compétence</a>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-responsive">
+        <table class="table table-hover table-striped">
+            <tr>
+                <th>nom</th>
+                <th>version</th>
+                <th>domaine</th>
+                <th></th>
+                <th></th>
+            </tr>
+            {% for competence in form.competence %}
+            <tr>
+                <td>{{competence.libelle}}</td>
+                <td>{{competence.version}}</td>
+                <td>{{form.domaine[competence.idDomaine -1]['nomDomaine']}}</td>
+                <td>
+                    <div class="btn-group btn-group-lg">
+                        {%if session.login is defined %}
+                        {%if session.role == 1 %}
+                        <a href="index.php?page=competencemodif&id={{competence.idCompetence}}">
+                            <span class="glyphicon glyphicon-pencil violet" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                </td>
+                <td>
+                    <div class="btn-group btn-group-lg">
+                        <a href="index.php?page=competence&id={{competence.idCompetence}}">
+                            <span class="glyphicon glyphicon-trash violet" aria-hidden="true"></span>
+                        </a>
+                        {% endif %}
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div> #}
+
+{% endblock %}

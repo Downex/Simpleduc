@@ -1,0 +1,324 @@
+/* CheckBox */
+
+
+/* */
+a{
+    color: #522472;
+}
+
+.blanc{
+  color: #FFF;
+}
+
+.black{
+    color:black;
+}
+
+.background-violet{
+    background-color: #522472;
+    color: #FFF;
+}
+
+
+.button{
+   background-color: #522472;
+   color: #FFF; 
+}
+
+.violet{
+  color: #522472;
+}
+
+h1 {
+  text-align: center;
+  color: #522472;
+}
+
+.h3 {
+  text-align: center;
+  color: #522472;
+}
+
+.btn-large{
+   background-color: #522472;    
+   color: #FFF;
+   text-transform: uppercase;
+   transition: 0.3s;
+}
+    .btn-large:hover {
+        background-color: #3d1956;
+        color: #fff;
+    }
+
+.btn2 {
+    border: 2px solid #522472;
+    background-color: #fff;
+    color: #522472;
+    text-transform: uppercase;
+}
+    .btn2:hover {
+        background-color: #522472;
+        color: #fff;
+    }
+    .unRef{
+        text-decoration: none;
+        color: #522472;
+    }
+    .unRef:hover {
+        text-decoration: none;
+        color: #fff;
+    }
+    .btn2:hover a{
+        color: #fff;
+    }
+
+.bold {
+    font-weight: bold;
+}
+
+/* navbar */
+.navbar-default {
+    background-color: #522472;
+    border-color: #522472;
+}
+/* Title */
+.navbar-default .navbar-brand {
+    color: #FFF;
+}
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+    color: #522472;
+}
+/* Link */
+.navbar-default .navbar-nav > li > a {
+    text-transform: uppercase;
+    font-size: 12px;
+    color: #FFF;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+    color: skyblue;
+}
+/* Fond sélectionné */
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+    color: #FFF;
+    background-color: #522472;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+    color: #FFF;
+    background-color: #522472;
+}
+/* Caret */
+.navbar-default .navbar-nav > .dropdown > a .caret {
+    border-top-color: #777;
+    border-bottom-color: #777;
+}
+.navbar-default .navbar-nav > .dropdown > a:hover .caret,
+.navbar-default .navbar-nav > .dropdown > a:focus .caret {
+    border-top-color: #333;
+    border-bottom-color: #333;
+}
+.navbar-default .navbar-nav > .open > a .caret,
+.navbar-default .navbar-nav > .open > a:hover .caret,
+.navbar-default .navbar-nav > .open > a:focus .caret {
+    border-top-color: #555;
+    border-bottom-color: #555;
+}
+/* Mobile version */
+.navbar-default .navbar-toggle {
+    border-color: #DDD;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+    background-color: #522472;
+}
+.navbar-default .navbar-toggle .icon-bar {
+    background-color: #522472;
+}
+@media (max-width: 767px) {
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+        color: #777;
+    }
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover,
+    .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
+          color: #333;
+    }
+}
+.dropdown-item{color: #FFF;}
+
+.hr {
+    height: 2px;
+    background: rgba(0,0,0,.2);
+}
+
+.foot-lnk {
+    text-align: center;
+    color: #000;
+}
+    .foot-lnk a {
+        color: #000;
+    }
+    .foot-lnk a:hover{
+        text-decoration: none;
+    }
+.hrUnderline {
+    margin-top: 0;
+    height: 2px;
+    background-color: #000;
+    width: 25%;
+    transition: 0.2s;
+}
+.foot-lnk a:hover + .hrUnderline {
+    margin-top: 0;
+    height: 2px;
+    background-color: #000;
+    width: 27%;
+}
+.hrUnderline2 {
+    margin-top: 0;
+    height: 2px;
+    background-color: #000;
+    width: 27%;
+    transition: 0.2s;
+}
+
+.foot-lnk a:hover + .hrUnderline2 {
+    width: 30%;
+}
+#formConnect {
+    transition: all 0.4s linear;
+    z-index:1
+}
+#ConnectShowHide {
+    transition: all 0.4s linear;
+    transition-delay: 1.9s;
+    z-index: 5000;
+}
+#formConnect:hover{
+    transform: rotateX(90deg);
+    height: 0;
+}
+#formConnect:hover + #ConnectShowHide {
+    top: 0px;
+}
+#formSign {
+    display: block;
+}
+#SignInShowHide {
+    display: none;
+}
+
+.competenceList {
+    box-shadow: 1px 1px 1px #9b9ea3, -1px 1px 1px #9b9ea3, 1px -1px 1px #9b9ea3, -1px -1px 1px #9b9ea3;
+    border-radius: 8px;
+    height: 8%;
+    margin-right: 2%;
+    margin-top: 2%;
+    padding: 1%;
+}
+.underline {
+    min-width: 205%;
+    margin-right: 20%;
+    background-color: lightblue;
+    border: 1px solid transparent;
+    border-bottom-color: #522472;
+}
+
+.results tr[visible='false'],
+.no-result{
+  display:none;
+}
+
+.results tr[visible='true']{
+  display:table-row;
+}
+
+.counter{
+  padding:8px; 
+  color:#ccc;
+}
+
+.competence-item {
+    border-radius: 5px;
+    box-shadow: 1px 1px 10px #9b9ea3, 1px -1px 1px #9b9ea3, -1px -1px 1px #9b9ea3, -1px 1px 10px #9b9ea3;
+    width: 200px;
+    height: 150px;
+    padding: 0;
+    margin: 0 15px;
+    background-color: #fff;
+}
+.titleComp {
+    text-align: center;
+    font-size: 22px;
+    font-family: 'Arial Black';
+    margin-top: 5%;
+    color: #522472;
+    margin-bottom: -10%;
+}
+.domaineComp{
+    text-align: center;
+    font-weight: bold;
+}
+.btnAddCompetence {
+    width: 100%;
+    border: none;
+    position: absolute;
+    bottom: 0;
+    height: 30%;
+    background-color: #522472;
+    color: #fff;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    transition: ease-in 0.2s;
+}
+.btnAddCompetence:hover{
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/*Drag&Drop*/
+.facet-container{
+    width: 330px;
+  }
+  .right {
+    float: right;
+  }
+  .left {
+    float: left;
+  }
+  .facet-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    margin-right: 10px;
+    background: #eee;
+    padding: 5px;
+    width: 143px;
+    min-height: 1.5em;
+    font-size: 0.85em;
+  }
+  .facet-list li {
+    margin: 5px;
+    padding: 5px;
+    font-size: 1.2em;
+    width: 120px;
+  }
+  .facet-list li.placeholder {
+    height: 1.2em
+  }
+  .facet {
+    border: 1px solid #bbb;
+    background-color: #fafafa;
+    cursor: move;
+  }
+  .facet.ui-sortable-helper {
+    opacity: 0.5;
+  }
+  .placeholder {
+    border: 1px solid orange;
+    background-color: #fffffd;
+  }

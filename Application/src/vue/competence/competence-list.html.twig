@@ -1,0 +1,380 @@
+{% extends "base.html.twig" %}
+
+{% block title %} {{ parent() }} - Gestion des compétences {% endblock %}
+
+{% block contenu %}
+
+{% if form.valide is defined %}
+    {% if form.valide == true %}
+        <h1 class="h3 mb-3 font-weight-normal">{{ form.message }}</h1>
+    {% else %}
+        <h1 class="alert alert-danger" role="alert">{{ form.message }}</h1>
+    {% endif %}
+{% endif %}
+
+<div class="">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel" style="min-height: 643px;"> 
+        <h1> Gestion des compétences </h1>
+            <div class="x_content">
+                <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                    <ul id="myTab" class="nav nav-tabs-type center" role="tablist">
+                        {% for domaine in form.domaine %}
+                            {% if domaine.idDomaine == 1 %}
+                                <li role="presentation" class="active">
+                                    <a href="#tab_content{{domaine.idDomaine}}" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">{{domaine.nomDomaine}}</a>
+                                </li>
+                            {% else %}
+                                <li role="presentation" class="">
+                                    <a href="#tab_content{{domaine.idDomaine}}" role="tab" id="profile-tab{{domaine.idDomaine}}" data-toggle="tab" aria-expanded="false">{{domaine.nomDomaine}}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                    <form method="post" class="form-signin" action="index.php?page=competenceList" enctype="application/x-www-form-urlencoded">
+                        <div id="myTabContent" class="tab-content">
+                            {% for domaine in form.domaine %}
+                                {% if domaine.idDomaine == 1 %}
+                                    <div role="tabpanel" class="tab-pane fade active in" id="tab_content{{domaine.idDomaine}}" aria-labelledby="home-tab">     
+                                        {% for a in array3 %}
+                                            {% if a.idDomaine == 1 %}
+                                                {% if a.result == "non" %}
+                                                    <div class="competenceList" role="button">
+                                                        <input type="checkbox" name="cocher[]" class="checkSkill" value="{{a.idCompetence}}">{{a.libelle}}
+                                                    </div>
+                                                {% elseif a.result == "oui" %}
+                                                    <div class="competenceList" role="button" style="background-color: #522472;">
+                                                        <input type="checkbox" name="cocher[]" class="checkSkill" value="{{a.idCompetence}}" checked>{{a.libelle}}
+                                                    </div>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                {% else %}
+                                    <div role="tabpanel" class="tab-pane fade" id="tab_content{{domaine.idDomaine}}" aria-labelledby="profile-tab">
+                                        {% for a in array3 %}
+                                            {% if a.idDomaine == domaine.idDomaine %}
+                                                {% if a.result == "non" %}
+                                                    <div class="competenceList" role="button">
+                                                        <input type="checkbox" name="cocher[]" class="checkSkill" value="{{a.idCompetence}}">{{a.libelle}}
+                                                    </div>
+                                                {% elseif a.result == "oui" %}
+                                                    <div class="competenceList" role="button" style="background-color: #522472;">
+                                                        <input type="checkbox" name="cocher[]" class="checkSkill" value="{{a.idCompetence}}" checked>{{a.libelle}}
+                                                    </div>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <button type="submit" name="btAddCompetence" id="btAddCompetence" class="btn btn-simpleduc col-md-2 col-md-offset-5" style="margin-top: 3%;">
+                            CONFIRMER
+                        </button>
+                    </form>
+                    {# <div id="myTabContent" class="tab-content">
+                        {% for domaine in form.domaine %}
+                            {% if domaine.idDomaine == 1 %}
+                                <div role="tabpanel" class="tab-pane fade active in" id="tab_content{{domaine.idDomaine}}" aria-labelledby="home-tab">                                    
+                                    {% for a in array3 %}
+                                        {% if a.idDomaine == domaine.idDomaine %}
+                                            <div class="competenceList" role="button" style="background-color: #522472;">
+                                                <input type="checkbox" name="cocher[]" class="checkSkill" value="{{a.idCompetence}}" checked>{{a.idCompetence}} - {{a.libelle}}
+                                            </div>
+                                        {% else %}
+                                            <div class="competenceList" role="button">
+                                                <input type="checkbox" name="cocher[]" class="checkSkill" value="{{a.idCompetence}}">{{a.idCompetence}} - {{a.libelle}}
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <div role="tabpanel" class="tab-pane fade" id="tab_content{{domaine.idDomaine}}" aria-labelledby="profile-tab">                                   
+                                    {% for a in array3 %}
+                                        {% if a.idDomaine == domaine.idDomaine %}
+                                            <div class="competenceList" role="button" style="background-color: #522472;">
+                                                <input type="checkbox" name="cocher[]" class="checkSkill" value="{{a.idCompetence}}" checked>{{a.idCompetence}} - {{a.libelle}}
+                                            </div>
+                                        {% else %}
+                                            <div class="competenceList" role="button">
+                                                <input type="checkbox" name="cocher[]" class="checkSkill" value="{{a.idCompetence}}">{{a.idCompetence}} - {{a.libelle}}
+                                            </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div> #}
+                    {# {% for my in my %} 
+                        <div class="competenceList" role="button" style="background-color: #522472;">
+                            <input type="checkbox" name="cocher[]" class="checkSkill" value="{{my.idCompetence}}" checked>idC={{my.idCompetence}} - idD={{my.idDomaine}}- {{my.libelle}}
+                        </div>
+                    {% endfor %} #}
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+                                                {# {% if my[deux][0] is defined and my[deux][4] == domaine.idDomaine %}
+                                                    <div class="competenceList" role="button" style="background-color: #522472;">
+                                                        <input type="checkbox" name="cocher[]" class="checkSkill" value="{{co.idCompetence}}" checked>{{deux}} - {{my[deux][0]}} - {{co.idCompetence}} - {{my[deux]['idDomaine']}} - {{co.libelle}}
+                                                    </div>
+                                                    - {{deux}} Good - C = {{co.libelle}} -
+                                                {% else %}
+                                                    <div class="competenceList" role="button">
+                                                        <input type="checkbox" name="cocher[]" class="checkSkill" value="{{co.idCompetence}}">{{deux}} - {{my[deux][0]}} -  {{co.idCompetence}} - {{co.libelle}}
+                                                    </div>
+                                                    - {{deux}} No - C = {{co.libelle}} -
+                                                {% endif %} #}
+
+
+
+
+
+
+
+
+
+
+            {# <div class="">
+              <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                      <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                        {% for domaine in form.domaine %}
+                            {% if domaine.idDomaine == '1' %}
+                                <li role="presentation" class="active">
+                                    <a href="#tab_content{{domaine.idDomaine}}" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">{{domaine.idDomaine}} {{domaine.nomDomaine}}</a>
+                                </li>
+                            {% else %}
+                                <li role="presentation" class="">
+                                    <a href="#tab_content{{domaine.idDomaine}}" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">{{domaine.idDomaine}} {{domaine.nomDomaine}}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                      </ul>
+                      <div id="myTabContent" class="tab-content text-center col-md-10 col-md-offset-1">
+                        {% for competence in form.competence %}
+                            <div class="competenceList" role="button">
+                                <input type="checkbox" name="cocher[]" class="checkSkill" value="{{competence.idCompetence}}">{{competence.libelle}}
+                            </div>
+                        {% endfor %}
+                        {% for my in myListe %}
+                            <div class="competenceList" role="button" style="background-color: #522472;">
+                                <input type="checkbox" name="cocher[]" class="checkSkill" value="{{my.idCompetence}}" checked>{{my.libelle}}
+                            </div>
+                        {% endfor %}
+                        {% for domaine in form.domaine %}
+                            {% if domaine.idDomaine == '1' %}
+                                <div role="tabpanel" class="tab-pane fade active in" id="tab_content{{domaine.idDomaine}}" aria-labelledby="home-tab">
+                                {% set i = 0 %}
+                                    {% for competence in form.competence %}
+                                        <div class="competenceList" role="button">
+                                            <input type="checkbox" name="cocher[]" class="checkSkill" value="{{competence.idCompetence}}">i = {{i}} || {{competence.libelle}}
+                                        </div>
+                                        {% set i = i+1 %}
+                                    {% endfor %}
+                                    {% for my in myListe %}
+                                        <div class="competenceList" role="button" style="background-color: #522472;">
+                                            <input type="checkbox" name="cocher[]" class="checkSkill" value="{{my.idCompetence}}" checked>{{my.libelle}}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <div role="tabpanel" class="tab-pane fade" id="tab_content{{domaine.idDomaine}}" aria-labelledby="profile-tab">
+                                {% set i = 0 %}
+                                    {% for competence in form.competence %}
+                                        <div class="competenceList" role="button">
+                                            <input type="checkbox" name="cocher[]" class="checkSkill" value="{{competence.idCompetence}}">{{competence.idDomaine}} || {{competence.libelle}}
+                                        </div>
+                                        {% set i = i+1 %}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
+                          <p>Domaine 2</p>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="tab_content3" aria-labelledby="profile-tab">
+                          <p>Domaine 3</p>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="tab_content4" aria-labelledby="profile-tab">
+                          <p>Domaine 4</p>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="tab_content5" aria-labelledby="profile-tab">
+                          <p>Domaine 5</p>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div> #}
+
+
+    {# <form method="post" class="form-sign">
+        {% for cmpt in form.cmptDomaine %}
+            <sapn>{{cmpt.libelle}}</span>
+        {% endfor %}
+    </form> #}
+
+
+{# <form method="post" class="form-signin" 
+    action="index.php?page=competenceList" enctype="application/x-www-form-urlencoded">
+        {# {% set i = 0 %} 
+        <input type="checkbox" name="cocher[]" value="{{competence.idCompetence}}" />
+            {{competence.idCompetence}}&nbsp; {{competence.libelle}} {{ competence.version}}
+            {# <input type="text" name="valueInput[]" ><br />
+         {% set i = i+1 %} 
+    {# {% endfor %} 
+</form> #}
+
+
+{# <form class="form-signin" action="index.php?page=competenceList" method="post" id="formCompetences" enctype="application/x-www-form-urlencoded" style="margin-top: 5%;">
+    <ul>
+        {% for competence in form.competence %}
+            <div class="competenceList" role="button">
+                <input type="checkbox" name="cocher[]" class="checkSkill" value="{{competence.idCompetence}}">{{competence.libelle}}
+            </div>
+        {% endfor %}
+        {% for my in myListe %}
+            <div class="competenceList" role="button" style="background-color: #522472;">
+                <input type="checkbox" name="cocher[]" class="checkSkill" value="{{my.idCompetence}}" checked>{{my.libelle}}
+            </div>
+        {% endfor %}
+        <br/>
+        <button type="submit" name="btAddCompetence" id="btAddCompetence" class="btn btn-simpleduc" style="margin-top: 3%;">
+            CONFIRMER
+        </button>
+    <ul>
+</form> #}
+
+
+<style>
+#first{
+    border-bottom: 5px solid #522472;
+}
+#DomaineCompetences{
+    text-align: center;
+    width: 100%;
+}
+#DomaineCompetences div{
+/*    border-bottom: 2px solid grey; */
+    display: inline-block;
+    width: 200px;
+    padding: 20px 0;
+    font-size: 18px;
+}
+#DomaineCompetences div:hover{
+    box-shadow: inset 0 -15px 0px -10px rgba(82, 36, 114, 0.3);
+    cursor: pointer;
+}
+#DomaineCompetences div:active{
+    box-shadow: inset 0 -15px 0px -10px rgba(82, 36, 114, 1);
+}
+#formCompetences{
+    margin: auto;
+    width: 80%;
+    text-align: center;
+}
+
+
+.tab-pane{
+    margin: auto;
+    width: 75%;
+    text-align: center;
+}
+.competenceList{
+    display: inline-block;
+    border: 1px solid #522472;
+    box-shadow: none;
+    border-radius: 45px;
+    min-width: 100px;
+    max-width: 250px;
+    padding: 10px 10px;
+    margin: 0;
+    margin-bottom: 10px;
+    text-align: center;
+    background-color: #fff;
+    color: #522472;
+}
+.competenceList:hover{
+    cursor: pointer;
+    background-color: #6C3196;
+    color: #fff;
+}
+.checkSkill{
+    display: none;
+}
+</style>
+<script>
+var indicator = document.getElementById('indicator');
+var formDomaine = document.getElementById('SelectDomaine');
+var domaine = document.getElementsByClassName('domaine');
+var competenceList = document.getElementsByClassName('competenceList');
+
+for(let d of domaine){
+    d.addEventListener('click', SelectDomaine, false);
+    setInterval(checked, 200);
+}
+
+
+for(let l of competenceList)
+{
+    l.addEventListener("click", Choose, false);
+    if(l.childNodes[1].checked === true){
+        l.style.color = '#fff';
+        l.style.backgroundColor = "#522472";
+    }else{
+        l.style.backgroundColor = '#fff';
+        l.style.color = "#522472";
+    }
+    //console.log('l = ' + l.childNodes[2].data + ' -> ' + l.childNodes[1].checked);
+    console.log(l.style);
+}
+{# console.log(skills); #}
+
+
+function Choose(){
+    /* if(this.style.backgroundColor != '#522472'){
+        console.log('background');
+        this.style.backgroundColor = '#522472';
+        this.style.color = '#fff';
+    }
+    else
+    {
+        this.style.backgroundColor = '#fff';
+        this.style.color = '#522472';
+        console.log('background : #fff');
+    } */
+    // modal.modal('show');  <-JQuery
+    if(this.childNodes[1].checked === true){
+        this.childNodes[1].checked = false;
+        this.style.backgroundColor = '#fff';
+        this.style.color = "#522472";
+    }else{
+        this.childNodes[1].checked = true;
+        this.style.backgroundColor = '#522472';
+        this.style.color = '#fff';
+    }
+}
+function checked(){
+    if(this.childNodes[1].checked == true){
+        this.style.borderBottom = '5px solid #522472';
+    }else{
+        this.style.borderBottom = 'none';
+    }
+    console.log(d.childNodes[1].checked);
+}
+function SelectDomaine(){
+    this.childNodes[1].checked = true;
+    console.log(this.childNodes[1].checked);
+}
+</script>
+
+{% endblock %}

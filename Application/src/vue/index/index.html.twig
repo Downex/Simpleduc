@@ -1,0 +1,185 @@
+{% extends "base.html.twig" %}
+{% block style %}
+<link href="css/style-signin.css" rel="stylesheet"> {% endblock %}
+{% block title %} {{ parent() }} Se connecter {% endblock %}
+
+{% block contenu %}
+
+{% if session.login is defined %}
+<div style="background: linear-gradient(transparent, rgb(247, 247, 247) 35%), url(build/images/formation-developpeur-web.jpg); background-size: 100%; background-repeat: no-repeat; width: 103.2%; height: auto; margin-left: -2.4%; margin-top: -0.7%; position: absolute; padding: 10% 10%; z-index: 0;">
+  <p style="font-size: 36px; font-weight: 600; color: #fff;">Gestion de développement de projets</p>
+<div class="" style="margin-top: 15%; z-index: 555;">
+  <div class="page-title">
+    <div class="title_left">
+      <h3>Mes projets</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+        <div class="x_content">
+
+        
+        <div class="row">
+        {% set i = 0 %}
+            {% for p in form.myprojet %}
+            {# {% set line = form.myprojet %} #}
+                {# {% for l in p %} #}
+                <div class="col-md-55">
+                <div class="thumbnail">
+                    <div class="image view view-first">
+                    <img style="width: 100%; display: block;" src="build/images/projet-image.png" alt="image" />
+                    <div class="mask">
+                    {% if p.responsable == session.login %}
+                        <p>Responsable</p>
+                        <div class="tools tools-bottom">
+                            <a href="index.php?page=projetdetails&id={{p.projet}}"><i class="fa fa-folder-open-o"></i></a>
+                            <a href="index.php?page=projetmodif&id={{p.projet}}"><i class="fa fa-pencil"></i></a>
+                        </div>
+                    {% else %}
+                        <p>Membre</p>
+                        <div class="tools tools-bottom">
+                            <a href="index.php?page=projetdetails&id={{p.projet}}"><i class="fa fa-folder-open-o"></i></a>
+                        </div>
+                    {% endif %}
+                    </div>
+                    </div>
+                    <div class="caption">
+                    <p>{{ p.libelle }}</p>
+                    </div>
+                </div>
+                </div>
+                {# {% endfor %}
+                fin l
+                {% set i = i+1 %} #}
+            {% endfor %}
+          </div>
+      
+    </div>
+  </div>
+  <!-- /My projects -->
+
+  <!-- page content -->
+  <div>
+    <div class="col-md-12">
+      <div>
+        <div class="x_title">
+          <h2>Liste des projets récents</h2>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+  <!-- start project list -->
+        <table class="table table-striped projects">
+            <thead>
+            <tr>
+                <th style="width: 20%">Nom du projet</th>
+                <th style="width: 15%">Responsable</th>
+                <th>Participants</th>
+                <th>Date de création</th>
+                <th>Status</th>
+                {% if session.login == 1 %}
+                <th>Gérer</th>
+                {% endif %}
+            </tr>
+            </thead>
+            <tbody>
+                {% for p in form.projet %}
+                    <tr>
+                        <td>
+                            <a href="index.php?page=projetdetails&id={{p.id}}">{{p.libelle}}</a>
+                        </td>
+                        <td style="line-height: 2.5;">
+                            <img src="production/images/user.png" class="avatar" alt="Avatar"><span style="margin-left: 5%;">{{p.prenom}} {{p.nom}}</span>
+                        </td>
+                        <td>
+                        <ul class="list-inline">
+                            <li>
+                            <img src="production/images/user.png" class="avatar" alt="Avatar">
+                            </li>
+                            <li>
+                            <img src="production/images/user.png" class="avatar" alt="Avatar">
+                            </li>
+                            <li>
+                            <img src="production/images/user.png" class="avatar" alt="Avatar">
+                            </li>
+                            <li>
+                            <img src="production/images/user.png" class="avatar" alt="Avatar">
+                            </li>
+                        </ul>
+                        </td>
+                        <td>
+                            <div>
+                              <p>Créé le {{p.date_lancement}}</p>
+                            </div>
+                        </td>
+                        <td>
+                        <button type="button" class="btn btn-warning btn-xs">Démarrage</button>
+                        </td>
+                        {% if session.login == 1 %}
+                        <td>
+                            <div class="btn-group btn-group-lg">
+                                <a href="index.php?page=projetrmodif&id={{p.id}}" class="btn btn-primary" style="font-size: 12px; padding: 5px 10px;"><span class="glyphicon glyphicon-pencil white" aria-hidden="true"></span></a>
+                            </div>
+                            <div class="btn-group btn-group-lg">
+                                <a href="index.php?page=projet&id={{p.id}}" class="btn btn-danger" style="font-size: 12px; padding: 5px 10px;"><span class="glyphicon glyphicon-trash white" aria-hidden="true"></span></a>
+                            </div>
+                        </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <!-- end project list -->
+        </div>
+</div>
+{% else %}
+        <div class="login">
+              <div style="background-color: #522472;padding-top: 5%; width: 40%; height: 100%; position: fixed;">
+                  <div class="login_wrapper">
+                      <div class="animate form login_form">
+                        <section class="login_content" style="text-align: left; text-shadow: none;">
+                          <form action="index.php?page=connexion" method="post" enctype="application/x-www-form-urlencoded">
+                            <h1 style="text-align: center; color: #fff;"><img src="production/images/logoSimple.png" alt="..." style="border-radius: 50px; margin-right: 4%;" />Simpléduc</h1>
+                            <div>
+                              <label style="color: #fff;">Identifiant</label>
+                              <input type="text" class="form-control" id="inputEmail" name="inputEmail" required="" style="background-color: #522472; border: 1px solid #fff;box-shadow: 0 0 0; color: #fff; height: 40px;" />
+                            </div>
+                            <div>
+                              <label style="color: #fff;">Mot de passe</label>
+                              <input type="password" class="form-control" id="inputPassword" name="inputPassword" required="" style="background-color: #522472; border: 1px solid #fff;box-shadow: 0 0 0; color: #fff; height: 40px;" />
+                            </div>
+                            <div>
+                              <button type="submit" class="btn btn-default submit" name="btConnecter" value=""style="background-color: #fff; border: 1px solid #fff; color: #522472; text-shadow: none; width: 100%; height: 40px; line-height: 2; box-shadow: inset 2px 2px 0 0, inset -2px 2px 0 0, inset 2px -2px 0 0;">SE CONNECTER</button>
+                              <br>
+                            </div>
+              
+                            <div class="clearfix"></div>
+              
+                            <div class="separator" style="text-align: center;"> 
+                            <h3 style="color:#fff;text-align: center;">OU</h3>            
+                              <button class="btn btn-default submit to_register" type="button" data-toggle="modal" data-target="#modalAjout" href="#" style="border: 1px solid #fff; background-color: #522472; color: #fff; text-shadow: none; width: 60%; height: 40px; line-height: 2;">S'INSCRIRE</button>
+                              <div class="clearfix"></div>
+                            </div>
+                          </form>
+                        </section>
+                      </div>
+                    </div>
+              </div>
+              <div style="background-image: url(production/images/mac-os-sierra-color-splash-purple-do.jpg); background-size: cover; width: 60%; height: 100%; position: fixed; right:0;">
+                <p style="text-transform: uppercase; color: #fff; font-size: 42px; position: fixed; top: 30%; right: 12%; cursor: default;">Développons le futur</p>
+                <div style="width: 20%; height: 6%; background-color: #522472; color: #fff; font-size: 25px; text-transform: uppercase; text-align: center; line-height: 1.7; position: fixed; top: 40%; right: 20%; cursor: default;">Développement</div>
+                <div id="slider" style="position: relative; overflow: hidden; margin: 20px auto 0 auto; border-radius: 4px;">
+                    <ul style="position: relative; margin: 0; padding: 0; height: 200px; list-style: none;">
+                      <li style="position: relative; display: block;width: 20%; height: 6%; background-color: #522472; color: #fff; font-size: 25px; text-transform: uppercase; text-align: center; line-height: 1.7; position: fixed; top: 40%; right: 20%; cursor: default;">Développement</li>
+                      <li style="position: relative; display: block;width: 20%; height: 6%; background-color: #522472; color: #fff; font-size: 25px; text-transform: uppercase; text-align: center; line-height: 1.7; position: fixed; top: 40%; right: 20%; cursor: default;">Gestion de projets</li>
+                      <li style="position: relative; display: block;width: 20%; height: 6%; background-color: #522472; color: #fff; font-size: 25px; text-transform: uppercase; text-align: center; line-height: 1.7; position: fixed; top: 40%; right: 20%; cursor: default;">Management</li>
+                    </ul>  
+                  </div>
+              </div>
+            </div>
+</div>
+            {% include "utilisateur/utilisateur-ajout.html.twig" %}
+        {% endif %}
+
+
+{% endblock %}

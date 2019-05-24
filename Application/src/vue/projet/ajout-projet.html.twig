@@ -1,0 +1,57 @@
+{% extends "base.html.twig" %}
+
+{% block title %} {{ parent() }} - Projets {% endblock %}
+
+{% block contenu %}
+<!-- page content -->                  
+      <div class="" role="main">
+
+          <div class="row">
+            
+              <div class="x_panel" style="border-radius: 10px;">
+                  <div class="x_title col-md-2">
+                    <h2>Création de projet <small>Session</small></h2>
+                    <div class="clearfix"></div>
+                  </div>
+                  <!-- <h2 style="float: right;"><a href="#signup" class="to_register"><button class="btn btn-primary">SE CONNECTER</button></a></h2> -->
+                  
+                  <div class="x_content ">
+
+                    <!-- start form for validation -->
+                    <form  action="index.php?page=projetajout" method="post" enctype="application/x-www-form-urlencoded" class="col-md-8 col-md-offset-2">
+                        <label for="nom">Nom du projet :</label>
+                        <input type="text" id="nom" class="form-control" name="nom" required />
+
+                        <label for="description">Description : <small class="text-muted">rapide et simple</small></label>
+                        <textarea id="story" id="description" name="description" class="form-control" style="resize: none;" rows="5" cols="33" required></textarea>
+
+                        <label for="responsable">Responsable du projet :</label>
+                        <input type="text" id="responsable" class="form-control" name="responsable" value="{{session.login}}" placeholder="{{session.prenom}} {{session.nom}}" readonly required />
+
+                        <label for="budget">Budget : <small class="text-muted">sans espace</small></label>
+                        <input type="text" id="budget" class="form-control" value="" name="budget" required />
+
+                        <label for="livraison">Date de livraison :</label>
+                        <input type="text" id="livraison" class="form-control" name="livraison" placeholder="dd-mm-yyyy" required />
+
+                        <label for="equipe">Equipe gérant :</label>
+                        <select class="select2_multiple form-control" multiple="multiple" id="equipe" name="equipe">
+                        {% for e in form.equipe %}
+                            <option value="{{e.id}}">{{ e.libelle }}</option>
+                        {% endfor %}
+                        </select>
+
+                          <br/>
+                          <button class="btn btn-light" style="float: left;"><a href="index.php?page=projets" style="color: #522472;">Annuler</a></button>
+                          <button class="btn btn-simpleduc" style="float: right;" id="btAjoutProjet" name="btAjoutProjet">Créer le projet</button>
+
+                    </form>
+                    <!-- end form for validations -->
+
+                  </div>
+                </div>
+          </div>
+        </div>
+      </div>
+        <!-- /page content -->
+{% endblock %}

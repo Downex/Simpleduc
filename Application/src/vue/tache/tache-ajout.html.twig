@@ -1,0 +1,53 @@
+    <!-- Modal -->
+    <div class="modal fade" id="modalAjout" role="dialog"> 
+        <div class="modal-dialog">
+        
+        <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Ajouter une tache</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="panel-body">
+                        <form  class="form-signin" action="index.php?page=tacheajout" method="post" enctype="application/x-www-form-urlencoded">
+                            <label for="inputLibelle" class="sr-only">Nom de la tache :</label>
+								<input type="text" id="inputLibelle" name="inputLibelle" class="form-control" placeholder="Saisir le nom de votre tâche" required autofocus>
+							
+								<label for="inputCout" class="sr-only">Coût :</label>
+								<input type="text" id="inputCout" name="inputCout" class="form-control" placeholder="Saisir le coût" required autofocus >
+							
+								<label for="inputHeures" class="sr-only">Nombre d'heures :</label>
+								<input type="text" id="inputHeures" name="inputHeures" class="form-control" placeholder="Saisir un Code Postal" required>
+							
+								<div class="form-group">
+									<label for="role">Developpeur :</label>
+									<select class="form-control" id="idDevelopeur" name="idDevelopeur">
+										<option value="0" selected>Developpeur :</option>
+										{% for developpeur in form.developpeur %}
+											<option value="{{developpeur.idDev}}">{{developpeur.nom}}</option> 
+										{% endfor %}  
+									</select>
+                        		</div>
+							
+								<div class="form-group">
+									<label for="role">Libellé du projet :</label>
+									<select class="form-control" id="idLibelleProjet" name="idLibelleProjet">
+										<option value="0" selected>Libellé du projet :</option>
+										{% for projet in form.projet %}
+											<option value="{{projet.id}}">{{projet.libelle}}</option> 
+										{% endfor %}  
+									</select>
+                        		</div>
+							
+                            <div class="modal-footer">
+                                <button class="btn btn-default pull-left background-violet" type="submit" data-toggle="modal" data-target="#modalPopUp" name="btAjouter">Ajouter</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                            </div> 
+                        </form>
+                    </div>    
+                </div>
+            </div>    
+        </div>
+    </div>
+

@@ -1,0 +1,105 @@
+{% if session.login is defined %}
+<!-- Modal -->
+<div class="modal fade" id="modalAjout" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Ajouter un utilisateur</h4>
+            </div>
+            <div class="modal-body">
+                <div class="panel-body">
+                    <form class="form-signin" action="index.php?page=utilisateurajout" method="post" enctype="application/x-www-form-urlencoded">
+                        <div class="form-group">
+                            <label for="inputEmail">Email:</label>
+                            <input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="Email"
+                                required autofocus>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword">Mot de passe:</label>
+                            <input type="password" id="inputPassword" name="inputPassword" class="form-control"
+                                placeholder="Mot de passe" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword2">Confirmer mot de passe:</label>
+                            <input type="password" id="inputPassword2" name="inputPassword2" class="form-control"
+                                placeholder="Confirmation mot de passe" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nom">Nom:</label>
+                            <input type="text" id="nom" name="nom" class="form-control" placeholder="Nom" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="prenom">Prénom:</label>
+                            <input type="prenom" id="prenom" name="prenom" class="form-control" placeholder="Prénom"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <label for="role">Role:</label>
+                            <select name="selectRole" class="form-control">
+                            {% for u in listeRole %}
+                                <option value="{{u.id}}">{{u.libelle}}</option>
+                            {% endfor %}
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-default pull-left background-violet" type="submit" name="btInscrire">Ajouter</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<!-- Modal -->
+<div class="modal fade" id="modalAjout" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">S'inscrire</h4>
+            </div>
+            <div class="modal-body">
+                <div class="panel-body">
+                    <form class="form-signin" action="index.php?page=connexion" method="post" enctype="application/x-www-form-urlencoded">
+                        <div class="form-group">
+                            <label for="inputEmail">Email:</label>
+                            <input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="Email"
+                                required autofocus>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword">Mot de passe:</label>
+                            <input type="password" id="inputPassword" name="inputPassword" class="form-control"
+                                placeholder="Mot de passe" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword2">Confirmer mot de passe:</label>
+                            <input type="password" id="inputPassword2" name="inputPassword2" class="form-control"
+                                placeholder="Confirmation mot de passe" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nom">Nom:</label>
+                            <input type="text" id="nom" name="nom" class="form-control" placeholder="Nom" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="prenom">Prénom:</label>
+                            <input type="prenom" id="prenom" name="prenom" class="form-control" placeholder="Prénom"
+                                required>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-default pull-left background-violet" type="submit" name="btInscrire">S'inscrire</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}

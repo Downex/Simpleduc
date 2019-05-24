@@ -1,0 +1,140 @@
+{% extends "base.html.twig" %}
+{% block style %}<link href="css/style-signin.css" rel="stylesheet"> {% endblock %}
+{% block title %} {{ parent() }} - Modifier mon profil {% endblock %}
+       
+{% block contenu %} 
+<!-- page content -->                  
+    <div class="" role="main">
+        <div class="row">            
+            <div class="x_panel" style="border-radius: 10px;">
+                <div class="x_content">
+                  <div class="profile_img col-md-2 col-md-offset-5">
+                    <div id="crop-avatar">
+                      <p><span style="text-transform: uppercase;">{{form.utilisateur.initial}}</p>
+                    </div>
+                  </div>
+                    <div class="col-md-8 col-md-offset-2"><vue class="label-simpleduc">Profil général</span></div>
+                    <br />
+                    <form action="index.php?page=utilisateurmodif&id={{form.utilisateur.email}}" method="post" enctype="application/x-www-form-urlencoded" class="col-md-8 col-md-offset-2">
+                                          
+                        <label for="nom">Nom :</label>
+                        <input type="text" id="nom" name="nom" class="form-control" value="{{form.utilisateur.nom}}" required />
+
+                        <label for="prenom">Prénom :</label>
+                        <input type="text" id="prenom" name="prenom" class="form-control" value="{{form.utilisateur.prenom}}" required />
+                        
+                        <label for="inputEmail">Adresse mail :</label>
+                        <input type="text" id="email" name="email" class="form-control" value="{{form.utilisateur.email}}" readonly />
+                        
+                        <label for="inputPassword"> Modifier le mot de passe:</label>
+                        <input type="password" id="inputPassword" name="inputPassword" class="form-control">
+
+                        <label for="inputPassword2">Confirmer le mot de passe à modifier: </label>
+                        <input type="password" id="inputPassword2" name="inputPassword2" class="form-control">
+                        
+                        {% if session.login is defined %}
+                          {% if session.role == 1 %}
+                            <label for="role">Role : </label>
+                            <select class="form-control" name="role">
+                                {% for r in form.roles %}
+                                  {% if r.id == form.utilisateur.idRole %}
+                                    <option value="{{ r.id }}" selected>{{ r.libelle }}</option>
+                                  {% else %}
+                                    <option value="{{ r.id }}">{{ r.libelle }}</option>   
+                                  {% endif %}    
+                                {% endfor %} 
+                            </select>
+                          {% endif %} 
+                        {% endif %}
+                        <br/>
+                        {# <button class="btn btn-light col-md-4"><a href="index.php?page=projetdetails&id={{form.utilisateur.email}}" style="color: #522472;">Annuler</a></button> #}
+                        <button class="btn btn-simpleduc col-md-3" type="submit" name="btModifier" id="btModifier" style="float: right;">Valider</button>
+                    </form>
+
+                    <hr />
+                    <br />
+
+                    <div class="col-md-8 col-md-offset-2" id="developpeur"><vue class="label-simpleduc">Profil développeur</span></div>
+                    {% if form.utilisateur.dev == NULL %}
+                      <form method="post" action="index.php?page=utilisateurmodif" enctype="application/x-www-form-urlencoded"  class="col-md-8 col-md-offset-2">
+                        
+                            <input type="text" class="form-control" id="idDev" name="idDev" value="{{ form.utilisateur.email }}" style="display: none;">
+                            <br />
+                            <input type="text" class="form-control" id="nom" name="nom" value="{{ form.utilisateur.nom }}" style="display: none;">
+                            <br/>
+                            <input type="text" class="form-control" id="prenom" name="prenom" value="{{ form.utilisateur.prenom }}"  style="display: none;">
+                            <br/>
+                            <input type="text" class="form-control" id="idrole" name="idrole" value="{{ form.utilisateur.idRole }}" style="display: none;">
+
+                            <label for="tel"> Numéro de téléphone :</label>
+                            <input type="text" class="form-control" id="tel" name="tel" placeholder="téléphone" onchange="checkForm(this)">
+
+                            <label for="indiceRemuneration"> Indice de rémunération :</label>
+                            <input type="text" class="form-control" id="indiceRemuneration" name="indiceRemuneration" placeholder="indice de rémunération" onchange="checkForm(this)">
+
+                            <label for="idRem"> Coût horaire :</label>
+                            <select class="form-control" id="idRem" name="idRem" onchange="checkForm(this)">
+                                <option value="0" selected>Coût Horaire</option>
+                                {% for dev in listeRemuneration %}
+                                    <option value="{{dev.idRem}}">{{dev.coutHoraire}}€</option> 
+                                {% endfor %}  
+                            </select>
+                          <br/>
+                          <button class="btn btn-simpleduc" type="submit" name="btAjoutDev" id="btAjoutDev" style="float: right;">Valider le profil développeur</button>
+                        </form> 
+                      {% else %}
+                        <form method="post" action="index.php?page=utilisateurmodif" enctype="application/x-www-form-urlencoded"  class="col-md-8 col-md-offset-2">
+                            <input type="text" class="form-control" id="idDev" name="idDev" placeholder="{{ form.utilisateur.email }}" value="{{ form.utilisateur.email }}" style="display:none;">
+                            <br />
+                            <input type="text" class="form-control" id="nom" name="nom" placeholder="{{ form.utilisateur.nom }}" value="{{ form.utilisateur.nom }}"  style="display: none;">
+                            <br/>
+                            <input type="text" class="form-control" id="prenom" name="prenom" placeholder="{{ form.utilisateur.prenom }}" value="{{ form.utilisateur.prenom }}"  style="display: none;">
+                            <br />
+                            <input type="text" class="form-control" id="tel" name="tel" placeholder="{{ form.utilisateur.tel }}" value="{{form.developpeur.tel}}" onchange="checkForm(this)">
+                            <br />
+                            <input type="text" class="form-control" id="indiceRemuneration" name="indiceRemuneration" placeholder="{{ form.utilisateur.indiceRemuneration }}" value="{{form.developpeur.indiceRemuneration}}" onchange="checkForm(this)">
+                            <br />
+                            <select class="form-control" id="idRem" name="idRem" onchange="checkForm(this)">
+                                <option value="{{form.developpeur.idRem}}" selected>{{form.developpeur.coutHoraire}} €</option>
+                                {% for dev in listeRemuneration %}
+                                    <option value="{{dev.idRem}}">{{dev.coutHoraire}} €</option> 
+                                {% endfor %}  
+                            </select>
+                            <br/>
+                            <button class="btn btn-simpleduc" type="submit" name="btModifDev" id="btModifDev" style="float: right;">Valider le profil développeur</button>
+                          </form> 
+                        {% endif %}
+                        <script>
+                            function checkForm(txt){
+                                var submitBtn = document.getElementById('btAjoutDev');
+                                var input = document.getElementsByTagName('input');
+                                var select = document.getElementsByTagName('select');
+                                for (i = 0; i < input.length; i++){
+                                    if(input[i].type == 'text' && input[i].value == '' && select.option.value == '0'){
+                                        submitBtn.disabled = true;
+                                        return false;
+                                    }
+                                }els{
+                                    submitBtn.disabled = false;
+                                }
+                            }
+                        </script>
+                        {%if form.valide is not defined %} 
+                        {% else %}
+                            {% if form.valide == true %}
+                                <h1 class="h3 col-md-12 col-xs-12 font-weight-normal">{{form.message}}</h1>
+                                <span class="h3 col-md-12 col-xs-12 font-weight-normal"> {{form.message}}</span>
+                            {% else %}
+                                <h1 class="h3 col-md-12 col-xs-12 font-weight-normal">Une erreur est survenue</h1> 
+                                <span class="alert alert-danger col-md-12 col-xs-12" role="alert">{{ form.message }} <span class="glyphicon glyphicon-warning-sign"></span></span> 
+                            {% endif %}       
+                        {% endif %}
+                    <!-- end form for validations -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /page content -->
+
+{% endblock %} 
+

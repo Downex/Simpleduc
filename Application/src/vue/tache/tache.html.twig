@@ -1,0 +1,69 @@
+{% extends "base.html.twig" %}
+
+{% block title %} {{ parent() }} - Gestion des tâches {% endblock %}
+
+{% block contenu %} <h1> Gestion des tâches </h1>
+
+{% if form.valide is defined %}
+{% if form.valide == true %}
+<h1 class="h3 mb-3 font-weight-normal">{{ form.message }}</h1>
+{% else %}
+<h1 class="alert alert-danger" role="alert">{{ form.message }}</h1>
+{% endif %}
+{% endif %}
+
+<div class="panel">
+    <!-- Default panel contents -->
+    <div class="panel-heading background-violet">
+        <span>Liste des tâches</span>
+        <div class="pull-right">
+            <a class="blanc" data-toggle="modal" data-target="#modalAjout" href="#">Ajouter une tâche</a>
+        </div>
+    </div>
+
+    <!-- Table -->
+    <div class="table-responsive">
+        <table class="table table-hover table-striped">
+            <tr>
+                <th>Libellé</th>
+                <th>Cout</th>
+                <th>Nombre d'heures</th>
+                <th>Developpeur</th>
+                <th>Projet</th>
+            </tr>
+            {% for t in liste %}
+            <tr>
+                <td>{{t.libelle}}</td>
+                <td>{{t.cout}}</td>
+                <td>{{t.heures}}</td>
+                <td>{{form.developpeur[t.idDev -1]['nom']}}</td>
+                <td>{{form.projet[t.code_Projet -1]['libelle']}}</td>
+                <td>
+                    <div class="btn-group btn-group-lg">
+                        {%if session.login is defined %}
+                        {%if session.role == 1 %}
+                        <a href="index.php?page=tachemodif&id={{tache.code}}">
+                            <span class="glyphicon glyphicon-pencil violet" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                </td>
+                <td>
+                    <div class="btn-group btn-group-lg">
+                        <a href="index.php?page=tache&id={{tache.code}}">
+                            <span class="glyphicon glyphicon-trash violet" aria-hidden="true"></span>
+                        </a>
+                        {% endif %}
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+<!-- Modal  Ajout/Modification-->
+{% include "tache/tache-ajout.html.twig" %}
+{% include "tache/tache-modif.html.twig" %}
+
+{% endblock %}

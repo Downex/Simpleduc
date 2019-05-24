@@ -1,0 +1,37 @@
+<!-- Modal -->
+<div class="modal fade" id="modalAjout" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Ajouter une compétence</h4>
+            </div>
+            <div class="modal-body">
+                <div class="panel-body">
+                    <form class="form-signin" action="index.php?page=competenceajout" method="post" enctype="application/x-www-form-urlencoded">
+                        <div class="form-group">
+                            <label for="inputNom">Nom de compétence :</label>
+                            <input type="text" id="inputNom" name="inputNom" class="form-control" placeholder="Nom de compétence"
+                                required autofocus>
+                        </div>
+                        <div class="form-group">
+                            <label for="role">Domaine :</label>
+                            <select class="form-control" id="idDomaine" name="idDomaine">
+                                <option value="0" selected>Domaine :</option>
+                                {% for domaine in form.domaine %}
+                                    <option value="{{domaine.idDomaine}}">{{domaine.nomDomaine}}</option> 
+                                {% endfor %}  
+                            </select>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-default pull-left background-violet" type="submit" name="btAjoutCompetence">Ajouter</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
